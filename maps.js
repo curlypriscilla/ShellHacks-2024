@@ -65,7 +65,7 @@ async function initMap() {
 
 async function findNearbyShelters(userLocation, PlacesService) {
   // Create an instance of PlacesService correctly
-  const service = new PlacesService(map);
+  const service = new google.maps.places.PlacesService(map);
 
   const request = {
     location: userLocation,
@@ -85,39 +85,86 @@ async function findNearbyShelters(userLocation, PlacesService) {
 }
 
 function createMarker(place, userLocation) {
-  const marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location,
-    title: place.name,
-  });
-
-  // Show shelter info when the marker is clicked
-  google.maps.event.addListener(marker, 'click', function () {
-    const infowindow = new google.maps.InfoWindow({
-      content: place.name,
+    const marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location,
+      title: place.name,
     });
-    infowindow.open(map, marker);
+  
+    // Create an InfoWindow to display shelter name and route info
+    const infowindow = new google.maps.InfoWindow();
+  
+    // When the user clicks on the marker, show the InfoWindow and calculate route
+    google.maps.event.addListener(marker, 'click', function () {
+      // Check if infowindow is defined
+      if (!infowindow) {
+        console.error('Error: InfoWindow is undefined.');
+        return;
+      }
+  
+      // Show shelter name in the InfoWindow initially
+      infowindow.setContent(`<strong>${place.name}</strong><br>Calculating route...`);
+      infowindow.open(map, marker);
+  
+      // Draw the route and update the InfoWindow with travel time and distance
+      showEscapeRouteToShelter(userLocation, place.geometry.location, infowindow, place.name, marker);
+    });
+  }
 
-    // Draw escape route to this marker's location when clicked
-    showEscapeRouteToShelter(userLocation, place.geometry.location);
-  });
-}
-
-function showEscapeRouteToShelter(userLocation, destination) {
-  const request = {
-    origin: userLocation,
-    destination: destination, // Destination will be the marker's position
-    travelMode: 'DRIVING',
-  };
-
-  directionsService.route(request, function (result, status) {
-    if (status === 'OK') {
-      directionsRenderer.setDirections(result);
+  function showEscapeRouteToShelter(userLocation, destination, infowindow, placeName, marker) {
+    let destinationLatLng;
+  
+    // Check if destination is a google.maps.LatLng object or LatLngLiteral
+    if (typeof destination.lat === 'function' && typeof destination.lng === 'function') {
+      // If it's a google.maps.LatLng object, use .lat() and .lng() methods
+      destinationLatLng = {
+        lat: destination.lat(),
+        lng: destination.lng(),
+      };
     } else {
-      console.error('Directions request failed due to ' + status);
+      // Otherwise, assume it's already a LatLngLiteral
+      destinationLatLng = {
+        lat: destination.lat,
+        lng: destination.lng,
+      };
     }
-  });
-}
+  
+    const request = {
+      origin: userLocation,
+      destination: destinationLatLng, // Ensure it's in the correct LatLngLiteral format
+      travelMode: 'DRIVING',
+    };
+  
+    directionsService.route(request, function (result, status) {
+      if (status === 'OK') {
+        directionsRenderer.setDirections(result);
+  
+        // Get the duration (time it takes) and distance from the first leg of the route
+        const route = result.routes[0];
+        const leg = route.legs[0]; // Assume there's only one leg, as it's a direct route
+  
+        // Extract travel time and distance
+        const travelTime = leg.duration.text;
+        const travelDistance = leg.distance.text;
+  
+        // Ensure infowindow is still valid before setting content
+        if (!infowindow) {
+          console.error('Error: InfoWindow is undefined when setting content.');
+          return;
+        }
+  
+        // Update the InfoWindow with the travel time and distance
+        infowindow.setContent(`
+          <strong>${placeName}</strong><br>
+          Estimated travel time: ${travelTime}<br>
+          Distance: ${travelDistance}
+        `);
+        infowindow.open(map, marker);
+      } else {
+        console.error('Directions request failed due to ' + status);
+      }
+    });
+  }
 
 function handleLocationError(browserHasGeolocation, pos) {
   alert(
