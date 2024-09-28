@@ -1,7 +1,7 @@
-var map;
+let map, directionsService, directionsRenderer;
 
 // Initialize and add the map
-function initMap() {
+async function initMap() {
   // Default to Florida in case geolocation fails
   const floridaCenter = { lat: 27.9944024, lng: -81.7602544 };
   
@@ -10,6 +10,14 @@ function initMap() {
     center: floridaCenter,
     zoom: 6, // Default zoom level for Florida
   });
+
+  // Load the Places library using the new importLibrary function
+  const { PlacesService } = await google.maps.importLibrary("places");
+
+  // Initialize Directions Service and Renderer
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  directionsRenderer.setMap(map);
 
   // Check if the browser supports geolocation
   if (navigator.geolocation) {
@@ -42,6 +50,8 @@ function initMap() {
         });
         circle.bindTo('center', marker, 'position');
 
+        // Find nearby shelters and show the escape route
+        findNearbyShelters(userLocation, PlacesService);
       },
       function () {
         handleLocationError(true, map.getCenter());
@@ -53,6 +63,62 @@ function initMap() {
   }
 }
 
+async function findNearbyShelters(userLocation, PlacesService) {
+  // Create an instance of PlacesService correctly
+  const service = new PlacesService(map);
+
+  const request = {
+    location: userLocation,
+    radius: '50000', // 50 km radius (can adjust for larger searches)
+    keyword: 'emergency shelter', // Search term for shelter locations
+  };
+
+  service.nearbySearch(request, function (results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (let i = 0; i < results.length; i++) {
+        createMarker(results[i], userLocation);
+      }
+    } else {
+      console.log('No nearby shelters found');
+    }
+  });
+}
+
+function createMarker(place, userLocation) {
+  const marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location,
+    title: place.name,
+  });
+
+  // Show shelter info when the marker is clicked
+  google.maps.event.addListener(marker, 'click', function () {
+    const infowindow = new google.maps.InfoWindow({
+      content: place.name,
+    });
+    infowindow.open(map, marker);
+
+    // Draw escape route to this marker's location when clicked
+    showEscapeRouteToShelter(userLocation, place.geometry.location);
+  });
+}
+
+function showEscapeRouteToShelter(userLocation, destination) {
+  const request = {
+    origin: userLocation,
+    destination: destination, // Destination will be the marker's position
+    travelMode: 'DRIVING',
+  };
+
+  directionsService.route(request, function (result, status) {
+    if (status === 'OK') {
+      directionsRenderer.setDirections(result);
+    } else {
+      console.error('Directions request failed due to ' + status);
+    }
+  });
+}
+
 function handleLocationError(browserHasGeolocation, pos) {
   alert(
     browserHasGeolocation
@@ -60,61 +126,3 @@ function handleLocationError(browserHasGeolocation, pos) {
       : "Error: Your browser doesn't support geolocation."
   );
 }
-function findNearbyShelters(userLocation) {
-    const request = {
-      location: userLocation,
-      radius: '50000', // 50 km radius (can adjust for larger searches)
-      keyword: 'emergency shelter', // Search term for shelter locations
-    };
-
-    service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, function (results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++) {
-          createMarker(results[i]);
-        }
-      } else {
-        console.log('No nearby shelters found');
-      }
-    });
-  }
-  function createMarker(place) {
-    const marker = new google.maps.Marker({
-      map: map,
-      position: place.geometry.location,
-      title: place.name,
-    });
-
-    // Show shelter info when the marker is clicked
-    google.maps.event.addListener(marker, 'click', function () {
-      const infowindow = new google.maps.InfoWindow({
-        content: place.name,
-      });
-      infowindow.open(map, marker);
-    });
-  }
-  function showEscapeRoute(userLocation) {
-    const destination = { lat: 27.950575, lng: -82.457178 }; // Example shelter location (Tampa, Florida)
-
-    const request = {
-      origin: userLocation,
-      destination: destination, // You can dynamically find the closest shelter here
-      travelMode: 'DRIVING',
-    };
-
-    directionsService.route(request, function (result, status) {
-      if (status === 'OK') {
-        directionsRenderer.setDirections(result);
-      } else {
-        console.error('Directions request failed due to ' + status);
-      }
-    });
-  }
-
-  function handleLocationError(browserHasGeolocation, pos) {
-    alert(
-      browserHasGeolocation
-        ? "Error: The Geolocation service failed."
-        : "Error: Your browser doesn't support geolocation."
-    );
-  }
