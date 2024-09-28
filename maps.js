@@ -62,7 +62,6 @@ async function initMap() {
     handleLocationError(false, map.getCenter());
   }
 }
-
 async function findNearbyShelters(userLocation, PlacesService) {
   // Create an instance of PlacesService correctly
   const service = new google.maps.places.PlacesService(map);
@@ -85,31 +84,25 @@ async function findNearbyShelters(userLocation, PlacesService) {
 }
 
 function createMarker(place, userLocation) {
-    const marker = new google.maps.Marker({
-      map: map,
-      position: place.geometry.location,
-      title: place.name,
-    });
-  
-    // Create an InfoWindow to display shelter name and route info
-    const infowindow = new google.maps.InfoWindow();
-  
-    // When the user clicks on the marker, show the InfoWindow and calculate route
-    google.maps.event.addListener(marker, 'click', function () {
-      // Check if infowindow is defined
-      if (!infowindow) {
-        console.error('Error: InfoWindow is undefined.');
-        return;
-      }
-  
-      // Show shelter name in the InfoWindow initially
-      infowindow.setContent(`<strong>${place.name}</strong><br>Calculating route...`);
-      infowindow.open(map, marker);
-  
-      // Draw the route and update the InfoWindow with travel time and distance
-      showEscapeRouteToShelter(userLocation, place.geometry.location, infowindow, place.name, marker);
-    });
-  }
+  const marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location,
+    title: place.name,
+  });
+
+  // Create an InfoWindow to display shelter name and route info
+  const infowindow = new google.maps.InfoWindow();
+
+  // When the user clicks on the marker, show the InfoWindow and calculate route
+  google.maps.event.addListener(marker, 'click', function () {
+    // Show shelter name in the InfoWindow initially
+    infowindow.setContent(`<strong>${place.name}</strong><br>Calculating route...`);
+    infowindow.open(map, marker);
+
+    // Draw the route and update the InfoWindow with travel time and distance
+    showEscapeRouteToShelter(userLocation, place.geometry.location, infowindow, place.name, marker);
+  });
+}
 
   function showEscapeRouteToShelter(userLocation, destination, infowindow, placeName, marker) {
     let destinationLatLng;
