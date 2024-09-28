@@ -69,7 +69,7 @@ async function findNearbyShelters(userLocation, PlacesService) {
   const request = {
     location: userLocation,
     radius: '50000', // 50 km radius (can adjust for larger searches)
-    keyword: 'emergency shelter', // Search term for shelter locations
+    keyword: 'senior high','shelter':'university' // Search term for shelter locations
   };
 
   service.nearbySearch(request, function (results, status) {
