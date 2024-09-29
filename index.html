@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="styles.css">
     <iframe 
     width="1200" 
-    height="750" 
+    height="250" 
+    margin="0"
     src="https://embed.windy.com/embed2.html?lat=25&lon=-80&detailLat=25.76&detailLon=-80.19&zoom=5&type=wind&radarRange=-1&menu=&message=&marker=&calendar=24&pressure=&location=coordinates&detail=&metricWind=default&metricTemp=default&radar=" 
     frameborder="0">
   </iframe>
@@ -26,15 +27,46 @@
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa3cMcVEQMOF6PtHp7Y_VLUmkZFlUbaLI&callback=initMap&libraries=maps,geometry">
     </script>
     <style>
+      .iframe-container {
+        width: 100%;
+        max-width: 300px; /* Ensures a max-width */
+        margin: 0 auto;    /* Centers the iframe */
+        padding-left: 20px;  /* Adds white space on the left */
+        padding-right: 20px; /* Adds white space on the right */
+      }
+
+      iframe {
+        width: 100%;      /* Makes iframe responsive */
+        height: 350px;    /* Adjust the height */
+        border: 0;
+
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
       #map {
-        
-        height: 70%;
+        /* Updated size */
+        width: 100%; /* Adjust width as needed */
+        height: 500px; /* Adjust height as needed */
+        max-width: 1200px; /* Ensure a max-width */
+        margin: 0 auto; /* Center the map */
       }
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
-        width: 50%
+      }
+      #news-alerts {
+        margin-top: 20px;
+      }
+      #news-container {
+        width: 100%;
+        max-width: 1200px;
+        height: auto; /* Set the height to auto so it adjusts with content */
+        margin: 0 auto;
       }
     </style>
     <script src ="maps.js" async defer> </script>
@@ -50,15 +82,15 @@
               lng: position.coords.longitude,
             };
 
-            // Center map on user location
+            
             map.setCenter(userLocation);
             map.setZoom(12);
 
-            // Call the functions directly after script loading
+            
             findNearbyShelters(userLocation);
             showEscapeRouteToShelter(userLocation);
 
-            // Call fetchNews after scripts have loaded
+            
             fetchNews();
           });
         }
@@ -80,7 +112,6 @@
         <div id="news-container">Loading news...</div>
     </div>
 
-    <!-- Only include news.js once, at the bottom of the body -->
     <script src="news.js" async defer></script>
 </body>
 <footer>
