@@ -13,9 +13,15 @@
         <li><a href="community.html">Community</a></li>
       </ul>
     </navbar>
-    <h2>Hurricane Shelter Finder</h2>
+    <h2>Hurricane Tracker</h2>
     <link rel="stylesheet" href="styles.css">
-
+    <iframe 
+    width="1200" 
+    height="750" 
+    src="https://embed.windy.com/embed2.html?lat=25&lon=-80&detailLat=25.76&detailLon=-80.19&zoom=5&type=wind&radarRange=-1&menu=&message=&marker=&calendar=24&pressure=&location=coordinates&detail=&metricWind=default&metricTemp=default&radar=" 
+    frameborder="0">
+  </iframe>
+  <h1>Hurricane Shelter Locator</h1>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa3cMcVEQMOF6PtHp7Y_VLUmkZFlUbaLI&callback=initMap&libraries=maps,geometry">
     </script>
     <style>
@@ -27,6 +33,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        width: 50%
       }
     </style>
     <script src ="maps.js" async defer> </script>
@@ -66,13 +73,7 @@
     <input type="checkbox" id="option5" name="option5" value="option5"><label for="option1">Option 5</label><br>
   </form><br>
   <button>Donate Now</button><br>
-  <h1>Hurricane Tracker</h1>
-  <iframe 
-  width="650" 
-  height="450" 
-  src="https://embed.windy.com/embed2.html?lat=25&lon=-80&detailLat=25.76&detailLon=-80.19&zoom=5&type=wind&radarRange=-1&menu=&message=&marker=&calendar=24&pressure=&location=coordinates&detail=&metricWind=default&metricTemp=default&radar=" 
-  frameborder="0">
-</iframe>
+  <h1>Hurricane Shelter Locator</h1>
 <h2>Latest Hurricane News</h2>
     <div id="news-alerts">
         <div id="news-container">Loading news...</div>
