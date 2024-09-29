@@ -22,6 +22,10 @@
   font-style: normal;
 }
 
+.logo_header{
+    
+}
+
 .button {
     color: var(--primary-color)
 }
@@ -35,7 +39,7 @@ ul {
   }
   
 li {
-    float: right;
+    float: left;
   }
   
 li a {
@@ -50,3 +54,12 @@ li a {
 li a:hover {
     background-color: #1c3fa8;
   }
+
+
+footer {
+    background-color: #002240;
+    color: white; /* Optional: set text color for contrast */
+    padding: 20px;
+    text-align: center;
+    }
+      
