@@ -62,10 +62,76 @@
       <img src="images/hurrihelp_favicon.png" alt="The HurriHelp Logo">
     </div>
   </div>
-  <h1>Hurricane Shelter Locator</h1>
+  <h1 id="shelter-heading">Hurricane Shelter Locator</h1>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa3cMcVEQMOF6PtHp7Y_VLUmkZFlUbaLI&callback=initMap&libraries=maps,geometry">
     </script>
     <style>
+      #donate-button {
+    background-color: #eaea3a;  
+    color: white;               
+    font-size: 20px;            
+    font-weight: bold;          
+    padding: 15px 30px;         
+    border: none;               
+    border-radius: 8px;         
+    cursor: pointer;            
+    transition: background-color 0.3s ease, transform 0.2s ease;  
+    text-transform: uppercase;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-top: 20px;           
+}
+
+/* Hover effect for the button */
+#donate-button:hover {
+    background-color: #2b30c0;  /* Darker red on hover */
+    transform: scale(1.05);     /* Slightly enlarge the button on hover */
+}
+      .checklist-container {
+  display: flex;
+  flex-direction: column; /* Stack checkboxes vertically */
+  align-items: center;    /* Center checkboxes horizontally */
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.checklist-container label {
+  font-size: 18px;       /* Increase font size for better visibility */
+  color: #2c3e50;        /* Dark blue for better readability */
+  margin-left: 10px;     /* Add spacing between checkbox and label */
+}
+
+.checklist-container input[type="checkbox"] {
+  transform: scale(1.5);  /* Make the checkboxes larger */
+  margin-right: 10px;     /* Add spacing between checkboxes */
+}
+
+.checklist-container br {
+  margin-bottom: 10px;    /* Add space between rows */
+}
+      #shelter-heading {
+        font-family: 'Arial', sans-serif;
+        font-size: 36px;          /* Large font size */
+        font-weight: bold;        /* Bold for emphasis */
+        color: #2c3e50;           /* Professional dark blue color */
+        text-align: center;       /* Center the heading */
+        text-transform: uppercase;/* Make it all uppercase for a modern feel */
+        letter-spacing: 2px;      /* Space out the letters slightly */
+        margin-top: 40px;         /* Add space above the heading */
+        margin-bottom: 20px;      /* Add space below the heading */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+      }
+      #checklist-heading{
+        font-family: 'Arial', sans-serif;
+        font-size: 36px;          /* Large font size */
+        font-weight: bold;        /* Bold for emphasis */
+        color: #2c3e50;           /* Professional dark blue color */
+        text-align: center;       /* Center the heading */
+        text-transform: uppercase;/* Make it all uppercase for a modern feel */
+        letter-spacing: 2px;      /* Space out the letters slightly */
+        margin-top: 40px;         /* Add space above the heading */
+        margin-bottom: 20px;      /* Add space below the heading */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+      }
       #logo_header {
         position: absolute;
         top: 50%;                  
@@ -77,6 +143,18 @@
         border-radius: 10px;
         transition: opacity 0.5s ease; 
         z-index: 2;                
+      }
+      #news_header {
+        font-family: 'Arial', sans-serif;
+        font-size: 36px;          /* Large font size */
+        font-weight: bold;        /* Bold for emphasis */
+        color: #2c3e50;           /* Professional dark blue color */
+        text-align: center;       /* Center the heading */
+        text-transform: uppercase;/* Make it all uppercase for a modern feel */
+        letter-spacing: 2px;      /* Space out the letters slightly */
+        margin-top: 40px;         /* Add space above the heading */
+        margin-bottom: 20px;      /* Add space below the heading */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
       }
 
       #logo_header h1 {
@@ -148,17 +226,22 @@
       };
     </script>
   </body>
-  <h2>Hurricane Prepardness Checklist</h2>
+  <h2 id="shelter-heading">Hurricane Preparedness Checklist</h2>
   <form>
-    <input type="checkbox" id="option1" name="option1" value="option1"><label for="option1">Water/Non-perishable food stocked up</label><br>
-    <input type="checkbox" id="option2" name="option2" value="option2"><label for="option2">Have a first-aid kit ready</label><br>
-    <input type="checkbox" id="option3" name="option3" value="option3"><label for="option3">Know the nearest shelter location</label><br>
-    <input type="checkbox" id="option4" name="option4" value="option4"><label for="option4">Have flashlights and batteries</label><br>
-    <input type="checkbox" id="option5" name="option5" value="option5"><label for="option1">Backup important documents</label><br>
+    <div class="checklist-container">
+      <input type="checkbox" id="option1" name="option1" value="option1">
+      <label for="option1">Water/Non-perishable food stocked up</label><br>
+      <input type="checkbox" id="option2" name="option2" value="option2">
+      <label for="option2">Have a first-aid kit ready</label><br>
+      <input type="checkbox" id="option3" name="option3" value="option3">
+      <label for="option3">Know the nearest shelter location</label><br>
+      <input type="checkbox" id="option4" name="option4" value="option4">
+      <label for="option4">Have flashlights and batteries</label><br>
+      <input type="checkbox" id="option5" name="option5" value="option5">
+      <label for="option5">Backup important documents</label><br>
+    </div>
   </form><br>
-  <button>Donate Now</button><br>
-  <h1>Hurricane Shelter Locator</h1>
-<h2>Latest Hurricane News</h2>
+<h2 id="news_header">Latest Hurricane News</h2>
     <div id="news-alerts">
         <div id="news-container">Loading news...</div>
     </div>
@@ -168,7 +251,7 @@
 </body>
 <footer>
     <p>Emergency Hotline</p>
-    <a href= "tel:8006213362">800-621-3362</a>
+    <a href= "tel:8006213362">800-621-3362</a> <button id="donate-button">Donate Now</button>
     <p>© 2024 HurriHelp. All rights reserved.</p>
 </footer>
 </html>
