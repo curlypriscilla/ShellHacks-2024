@@ -4,10 +4,6 @@
     <title>HurriHelp | Hura Ayuda</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="images/hurrihelp_favicon.png">
-    <div id="logo_header">
-        <h1>HurriHelp</h1><br>
-        <img src="images/hurrihelp_favicon.png" alt="The HurriHelp Logo">
-    </div>
     <navbar>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -15,18 +11,39 @@
       </ul>
     </navbar>
     <style>
+       /* Container for the iframe and title/logo */
+       .iframe-container {
+        position: relative;        /* Allows positioning the title/logo over the iframe */
+        width: 100%;
+        max-width: 1200px;
+        height: 350px;
+        margin: 0 auto;            /* Centers the iframe */
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
       /* Styling for the website title and logo */
       #logo_header {
-        text-align: center;       /* Centers the entire logo section */
-        margin-top: 20px;         /* Adds space above the header */
-        margin-bottom: 20px;      /* Adds space below the header */
+        position: absolute;
+    top: 50%;                  /* Center vertically */
+    left: 50%;                 /* Center horizontally */
+    transform: translate(-50%, -50%); /* Move it back to the center since it's absolutely positioned */
+    text-align: center;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    transition: opacity 0.5s ease;  /* Smooth transition for hover effect */
+    z-index: 2;                /* Ensure the title/logo is on top of the iframe */
       }
 
       #logo_header h1 {
         font-family: 'Arial', sans-serif;  /* Change font family to a clean, modern font */
         font-size: 48px;           /* Large font size for the title */
         font-weight: 700;          /* Make the font bold */
-        color: #2c3e50;            /* Professional dark blue color */
+        color: #f30707fa;            /* Professional dark blue color */
         margin-bottom: 10px;       /* Adds space between title and logo */
         text-transform: uppercase; /* Makes the title uppercase */
         letter-spacing: 2px;       /* Adds spacing between letters for a more modern look */
@@ -37,59 +54,81 @@
         height: auto;              /* Maintain aspect ratio */
       }
     </style>
-    <h2>Hurricane Tracker</h2>
     <link rel="stylesheet" href="styles.css">
+    <!-- Iframe and Title/Logo Section -->
+  <div class="iframe-container">
     <iframe 
-    width="1200" 
-    height="250" 
-    margin="0"
-    src="https://embed.windy.com/embed2.html?lat=25&lon=-80&detailLat=25.76&detailLon=-80.19&zoom=5&type=wind&radarRange=-1&menu=&message=&marker=&calendar=24&pressure=&location=coordinates&detail=&metricWind=default&metricTemp=default&radar=" 
-    frameborder="0">
-  </iframe>
+      src="https://embed.windy.com/embed2.html?lat=25&lon=-80&detailLat=25.76&detailLon=-80.19&zoom=5&type=wind&radarRange=-1&menu=&message=&marker=&calendar=24&pressure=&location=coordinates&detail=&metricWind=default&metricTemp=default&radar=">
+    </iframe>
+
+    <!-- Title and Logo placed on top of the iframe -->
+    <div id="logo_header">
+      <h1>HurriHelp | Hura Ayuda</h1>
+      <img src="images/hurrihelp_favicon.png" alt="The HurriHelp Logo">
+    </div>
+  </div>
   <h1>Hurricane Shelter Locator</h1>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDa3cMcVEQMOF6PtHp7Y_VLUmkZFlUbaLI&callback=initMap&libraries=maps,geometry">
     </script>
     <style>
-      .iframe-container {
-        width: 100%;
-        max-width: 300px; /* Ensures a max-width */
-        margin: 0 auto;    /* Centers the iframe */
-        padding-left: 20px;  /* Adds white space on the left */
-        padding-right: 20px; /* Adds white space on the right */
+      #logo_header {
+        position: absolute;
+        top: 50%;                  /* Center vertically */
+        left: 50%;                 /* Center horizontally */
+        transform: translate(-50%, -50%); /* Move it back to the center since it's absolutely positioned */
+        text-align: center;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        transition: opacity 0.5s ease;  /* Smooth transition for hover effect */
+        z-index: 2;                /* Ensure the title/logo is on top of the iframe */
       }
 
-      iframe {
-        width: 100%;      /* Makes iframe responsive */
-        height: 350px;    /* Adjust the height */
-        border: 0;
-
+      #logo_header h1 {
+        font-family: 'Arial', sans-serif;
+        font-size: 36px;
+        font-weight: bold;
+        margin: 0;
       }
 
+      #logo_header img {
+        width: 80px;
+        height: auto;
+      }
+
+      /* Hover effect to make the title/logo disappear */
+      .iframe-container:hover #logo_header {
+        opacity: 0;  /* Make the title and logo disappear */
+        pointer-events: none;  /* Allows interaction with the iframe underneath */
+      }
+
+      /* General page styling */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
+
+      h2 {
+        text-align: center;
+      }
+
       #map {
-        /* Updated size */
-        width: 100%; /* Adjust width as needed */
-        height: 500px; /* Adjust height as needed */
-        max-width: 1200px; /* Ensure a max-width */
-        margin: 0 auto; /* Center the map */
+        width: 100%;
+        height: 500px;
+        max-width: 1200px;
+        margin: 0 auto;
       }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+
       #news-alerts {
         margin-top: 20px;
       }
+
       #news-container {
         width: 100%;
         max-width: 1200px;
-        height: auto; /* Set the height to auto so it adjusts with content */
         margin: 0 auto;
+        height: auto;
       }
     </style>
     <script src ="maps.js" async defer> </script>
