@@ -13,6 +13,13 @@ The recent catastrophic hurricane Helene, which swept through Florida in Septemb
 - live Hurricane Tracker using an API from Windy
 - Latest Hurricane News
 
+ 
+## Screenshots
+
+![](https://github.com/curlypriscilla/ShellHacks-2024/blob/main/images/huraAyuda1.png)
+![](https://github.com/curlypriscilla/ShellHacks-2024/blob/main/images/huraAyuda2.png)
+
+
 
 ## Authors
 
