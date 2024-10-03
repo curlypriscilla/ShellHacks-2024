@@ -1,4 +1,24 @@
-# ShellHacks-2024
-ShellHacks 2024 Project
+# Hura Ayuda - ShellHacks 2024 Project
 
-The recent deadly hurricane that passed by inspired us to create a website focused on providing up-to-date hurricane preparedness information. We believe that having access to this information can help save lives and protect communities from the devastating effects of hurricanes.
+The recent catastrophic hurricane Helene, which swept through Florida in September 2024, inspired us to launch a website dedicated to delivering up-to-date hurricane safety information. We believe that having access to this information can help save lives and safeguard communities from the devastation caused by hurricanes. 
+
+
+
+
+
+## Features
+
+- Using the Google maps API to take in the user's location and map out the nearest storm shelters located, calculating both the distance in miles and time in minutes
+- Hurricane Preparedness Checklist
+- live Hurricane Tracker using an API from Windy
+- Latest Hurricane News
+
+
+## Authors
+
+- [@curlypriscilla](https://github.com/curlypriscilla)
+- [@Lcoto05](https://github.com/Lcoto05)
+- [@Beselik](https://github.com/Beselik)
+- [@aadilq](https://github.com/aadilq)
+
+
