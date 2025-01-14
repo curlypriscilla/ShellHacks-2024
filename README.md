@@ -1,4 +1,4 @@
-# Hura Ayuda - ShellHacks 2024 Project
+# HuriHelp - ShellHacks 2024 Project
 
 The recent catastrophic hurricane Helene, which swept through Florida in September 2024, inspired us to launch a website dedicated to delivering up-to-date hurricane safety information. We believe that having access to this information can help save lives and safeguard communities from the devastation caused by hurricanes. 
 
